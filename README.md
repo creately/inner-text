@@ -40,7 +40,7 @@ assert.equal(text, 'hello\nworld');
 
 ```
 
-You can specify the tags to add breaklines, the second parameter is optional and the defailt value is [ 'p' ]
+You can specify the tags to replace with, the second parameter is optional and the defailt value is `{ p : '\n' }`
 
 ```js
 
@@ -49,12 +49,16 @@ var text = innerText(el)
 assert.equal(text, 'hello\nworld');
 
 el.innerHTML = 'hello<div>world</div>';
-var text = innerText(el,['div'])
+var text = innerText(el, { div : '\n' } )
 assert.equal(text, 'hello\nworld');
 
 el.innerHTML = 'hello<p>world</p>';
-var text = innerText(el,['div'])
+var text = innerText(el, { p : '\n' })
 assert.equal(text, 'helloworld');
+
+el.innerHTML = 'hello<p>world</p>hi<p>there</p>';
+var text = innerText(el, { p : '\n', div : '\n\n' })
+assert.equal(text, 'hello\nworldhi\n\nthere');
 
 ```
 
