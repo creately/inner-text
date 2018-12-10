@@ -40,6 +40,24 @@ assert.equal(text, 'hello\nworld');
 
 ```
 
+You can specify the tags to add breaklines, the second parameter is optional and the defailt value is [ 'p' ]
+
+```js
+
+el.innerHTML = 'hello<p>world</p>';
+var text = innerText(el)
+assert.equal(text, 'hello\nworld');
+
+el.innerHTML = 'hello<div>world</div>';
+var text = innerText(el,['div'])
+assert.equal(text, 'hello\nworld');
+
+el.innerHTML = 'hello<p>world</p>';
+var text = innerText(el,['div'])
+assert.equal(text, 'helloworld');
+
+```
+
 # test
 ```sh
 npm test
