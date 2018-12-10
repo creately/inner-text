@@ -1,5 +1,6 @@
-module.exports = function innerText(el, tags) {
-  tags = tags || { p : '\n' };
+module.exports = function innerText(el, options) {
+  options = options || {};
+  var tags = options.tags || { p : '\n' };
   var html = el.innerHTML;
   html = html.replace(/&nbsp;/g, ' ');
   html = html.replace(/<(\/|br)*?>/gi, '\n');

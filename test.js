@@ -35,7 +35,7 @@ test('should not replace <p> if second param is defined but p tag is excluded', 
 
   el.innerHTML = 'hello<p>world</p>';
 
-  var text = innerText(el, { div : '\n' });
+  var text = innerText(el, { tags: { div : '\n' } });
 
   t.equal(text, 'helloworld');
 
@@ -48,7 +48,7 @@ test('should replace <div> if second param is defined and div tag is included', 
 
   el.innerHTML = 'hello<div>world</div>';
 
-  var text = innerText(el,{ div : '\n\n\n' });
+  var text = innerText(el, { tags: { div : '\n\n\n' }});
 
   t.equal(text, 'hello\n\n\nworld');
 
@@ -61,7 +61,7 @@ test('should replace <div> and <p> if second param is defined and both div and p
 
   el.innerHTML = 'hello<div>world</div>hi<p>there</p>';
 
-  var text = innerText(el,{ div : '\n', p : '\n' });
+  var text = innerText(el,{ tags: { div : '\n', p : '\n' } });
 
   t.equal(text, 'hello\nworldhi\nthere');
 
