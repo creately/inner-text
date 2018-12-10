@@ -29,6 +29,31 @@ test('should replace <div> with newline, but not <div/> (chrome behaviour with c
   t.end();
 });
 
+test('should replace <p> with newline', function(t){
+
+  var el = document.querySelector('body');
+
+  el.innerHTML = 'hello<p>world</p>';
+
+  var text = innerText(el);
+
+  t.equal(text, 'hello\nworld');
+
+  t.end();
+});
+
+test('should replace <p> with newline when multiple p tags', function(t){
+
+  var el = document.querySelector('body');
+
+  el.innerHTML = 'hello<p>world</p><p>hi</p>';
+
+  var text = innerText(el);
+
+  t.equal(text, 'hello\nworld\nhi');
+
+  t.end();
+});
 
 test('should remove "&nbsp;" with space', function(t){
 
