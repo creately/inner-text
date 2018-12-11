@@ -58,7 +58,7 @@ test('should not replace <p> if second param is defined but p tag is excluded', 
 
   var el = document.querySelector('body');
 
-  el.innerHTML = 'hello<p>world</p>';
+  el.innerHTML = 'hello<p style="width:23">world</p>';
 
   var text = innerText(el, { tags: { div : '\n' } });
 
@@ -71,7 +71,7 @@ test('should replace <div> if second param is defined and div tag is included', 
 
   var el = document.querySelector('body');
 
-  el.innerHTML = 'hello<div>world</div>';
+  el.innerHTML = 'hello<div style="width:23">world</div>';
 
   var text = innerText(el, { tags: { div : '\n\n\n' }});
 
@@ -84,7 +84,7 @@ test('should replace <div> and <p> if second param is defined and both div and p
 
   var el = document.querySelector('body');
 
-  el.innerHTML = 'hello<div>world</div>hi<p>there</p>';
+  el.innerHTML = 'hello<div>world</div>hi<p style="width:23">there</p>';
 
   var text = innerText(el,{ tags: { div : '\n', p : '\n' } });
 
@@ -142,6 +142,19 @@ test('should remove remaining html tags', function(t){
   var text = innerText(el);
 
   t.equal(text, 'helloworld\ninnerText');
+
+  t.end();
+});
+
+test('complex html', function(t){
+
+  var el = document.querySelector('body');
+
+  el.innerHTML = '<p style="width:23">Hello<span style="color: red" >w</span></p><div id="some_id" class="some_class">World</div><style>body{}</style>';
+
+  var text = innerText(el,{ tags: { div : '\n', p : '\n', br: '\n' }});
+
+  t.equal(text, '\nHellow\nWorld');
 
   t.end();
 });

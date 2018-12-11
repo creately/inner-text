@@ -4,8 +4,8 @@ module.exports = function innerText(el, options) {
   var html = el.innerHTML;
   html = html.replace(/&nbsp;/g, ' ');
   Object.keys( tags ).forEach(function(tag) {
-    // https://regex101.com/r/EtQdlD/2
-    html = html.replace( new RegExp( '<' + tag + '[ ]*\/?>' , 'gi' ) , tags[tag] );
+    // https://regex101.com/r/EtQdlD/3
+    html = html.replace( new RegExp( '<' + tag + '(>|.*?[^?]>)' , 'gi' ) , tags[tag] );
   });
   html = html.replace(/<(\/|.)*?>/gi, '');
   return html;
