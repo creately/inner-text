@@ -15,6 +15,31 @@ test('should replace <br/> tag with newline', function(t){
   t.end();
 });
 
+test('should replace <br/> tag with given replace empty string', function(t){
+
+  var el = document.querySelector('body');
+
+  el.innerHTML = 'hello<br/>world';
+
+  var text = innerText(el , { tags: { br : '' } });
+
+  t.equal(text, 'helloworld');
+
+  t.end();
+});
+
+test('should replace <br/> tag with given replace new lines', function(t){
+
+  var el = document.querySelector('body');
+
+  el.innerHTML = 'hello<br/>world';
+
+  var text = innerText(el , { tags: { br : '\n\n' } });
+
+  t.equal(text, 'hello\n\nworld');
+
+  t.end();
+});
 
 test('should not replace <div> if div tag is not specified', function(t){
 
