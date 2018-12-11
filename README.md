@@ -40,6 +40,28 @@ assert.equal(text, 'hello\nworld');
 
 ```
 
+You can specify the tags to replace with
+
+```js
+
+el.innerHTML = 'hello<p>world</p>';
+var text = innerText(el)
+assert.equal(text, 'hello\nworld');
+
+el.innerHTML = 'hello<div>world</div>';
+var text = innerText(el, { tags: { div : '\n' }} )
+assert.equal(text, 'hello\nworld');
+
+el.innerHTML = 'hello<p>world</p>';
+var text = innerText(el, { tags: { p : '\n' }})
+assert.equal(text, 'helloworld');
+
+el.innerHTML = 'hello<p>world</p>hi<p>there</p>';
+var text = innerText(el, { tags: { p : '\n', div : '\n\n' }})
+assert.equal(text, 'hello\nworldhi\n\nthere');
+
+```
+
 # test
 ```sh
 npm test
