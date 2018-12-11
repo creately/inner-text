@@ -1,11 +1,11 @@
 module.exports = function innerText(el, options) {
   options = options || {};
-  var tags = options.tags || { p : '\n' };
+  var tags = options.tags || { p : '\n', br: '\n' };
   var html = el.innerHTML;
   html = html.replace(/&nbsp;/g, ' ');
-  html = html.replace(/<(\/|br)*?>/gi, tags.br !== undefined ? tags.br : '\n' );
   Object.keys( tags ).forEach(function(tag) {
-    html = html.replace( new RegExp( '<' + tag + '>' , 'gi' ) , tags[tag] );
+    // https://regex101.com/r/EtQdlD/2
+    html = html.replace( new RegExp( '<' + tag + '[ ]*\/?>' , 'gi' ) , tags[tag] );
   });
   html = html.replace(/<(\/|.)*?>/gi, '');
   return html;
