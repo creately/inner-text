@@ -150,7 +150,7 @@ test('complex html', function(t){
 
   var el = document.querySelector('body');
 
-  el.innerHTML = '<p style="width:23">Hello<span style="color: red" >w</span></p><div id="some_id" class="some_class">World</div><style>body{}</style>';
+  el.innerHTML = '<p style="width:23">Hello<span style="color: red" >w</span></p><div id="some_id" class="some_class">World</div>';
 
   var text = innerText(el,{ tags: { div : '\n', p : '\n', br: '\n' }});
 
