@@ -28,6 +28,6 @@
     "testling": "^1.7.1"
   },
   "dependencies": {
-    "lodash": "^4.17.11"
+    "lodash.unescape": "^4.0.1"
   }
 }

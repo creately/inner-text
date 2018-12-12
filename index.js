@@ -1,4 +1,4 @@
-var unescape = require('lodash/unescape');
+var unescape = require('lodash.unescape');
 module.exports = function innerText(el, options) {
   options = options || {};
   var tags = options.tags || { p : '\n', br: '\n' };
