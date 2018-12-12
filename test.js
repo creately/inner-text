@@ -158,3 +158,16 @@ test('complex html', function(t){
 
   t.end();
 });
+
+test('complex html with entities that should be unescaped', function(t){
+
+  var el = document.querySelector('body');
+
+  el.innerHTML = '<p style="width:23">Hello<span style="color: red" >w</span></p><div id="some_id" class="some_class">!@#$%^&*()<>_+-={}|\:;"<>,./   `~</div>';
+
+  var text = innerText(el,{ tags: { div : '\n', p : '\n', br: '\n' }});
+
+  t.equal(text, '\nHellow\n!@#$%^&*()<>_+-={}|\:;"<>,./   `~');
+
+  t.end();
+});

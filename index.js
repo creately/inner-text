@@ -1,3 +1,4 @@
+var unescape = require('lodash.unescape');
 module.exports = function innerText(el, options) {
   options = options || {};
   var tags = options.tags || { p : '\n', br: '\n' };
@@ -8,5 +9,5 @@ module.exports = function innerText(el, options) {
     html = html.replace( new RegExp( '<' + tag + '(>|.*?[^?]>)' , 'gi' ) , tags[tag] );
   });
   html = html.replace(/<(\/|.)*?>/gi, '');
-  return html;
+  return unescape( html );
 };
