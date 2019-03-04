@@ -1,6 +1,6 @@
 {
   "name": "@creately/inner-text",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Cross Browser `innerText` function based on innerHTML with replacements.",
   "main": "index.js",
   "scripts": {

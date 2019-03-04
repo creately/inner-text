@@ -16,13 +16,13 @@ Otherwise this function can be helpful.
 
 # install
 ```sh
-npm install inner-text
+npm install @creately/inner-text
 ```
 
 # usage
 
-all innerText does is get the `el.innerText` from the `element`, even when the browser does not support it.
-you can't set the `innerText` with this module.
+All innerText does is get the `el.innerText` from the `element`, even when the browser does not support it.
+You can pass an html element or a string with html as input to this function. you can't set the `innerText` with this module.
 
 ```js
 var innerText = require('inner-text');
