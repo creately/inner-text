@@ -1,9 +1,9 @@
 var unescape = require('lodash.unescape');
 
-module.exports = function innerText(el, options) {
+module.exports = function innerText(source, options) {
   options = options || {};
   var tags = options.tags || { p : '\n', br: '\n' };
-  var html = el.innerHTML;
+  var html = typeof source === 'string' ? source : source.innerHTML;
   html = html.replace(/&nbsp;/g, ' ');
   Object.keys( tags ).forEach(function(tag) {
     // NOTE: replace selected tags with new lines

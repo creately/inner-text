@@ -4,7 +4,7 @@
   "description": "Cross Browser `innerText` function based on innerHTML with replacements.",
   "main": "index.js",
   "scripts": {
-    "test": "browserify test.js | testling"
+    "test": "browserify test.js | testling -x open"
   },
   "repository": {
     "type": "git",

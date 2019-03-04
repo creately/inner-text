@@ -1,173 +1,92 @@
-var test = require('tape');
-var innerText = require('./index');
-
-
-test('should replace <br/> tag with newline', function(t){
-
-  var el = document.querySelector('body');
-
-  el.innerHTML = 'hello<br/>world';
-
-  var text = innerText(el);
-
-  t.equal(text, 'hello\nworld');
-
-  t.end();
-});
-
-test('should replace <br/> tag with given replace empty string', function(t){
-
-  var el = document.querySelector('body');
-
-  el.innerHTML = 'hello<br/>world';
-
-  var text = innerText(el , { tags: { br : '' } });
-
-  t.equal(text, 'helloworld');
-
-  t.end();
-});
-
-test('should replace <br/> tag with given replace new lines', function(t){
-
-  var el = document.querySelector('body');
-
-  el.innerHTML = 'hello<br/>world';
-
-  var text = innerText(el , { tags: { br : '\n\n' } });
-
-  t.equal(text, 'hello\n\nworld');
-
-  t.end();
-});
-
-test('should not replace <div> if div tag is not specified', function(t){
-
-  var el = document.querySelector('body');
-
-  el.innerHTML = 'hello<div>world</div>';
-
-  var text = innerText(el);
-
-  t.equal(text, 'helloworld');
-
-  t.end();
-});
-
-test('should not replace <p> if second param is defined but p tag is excluded', function(t){
-
-  var el = document.querySelector('body');
-
-  el.innerHTML = 'hello<p style="width:23">world</p>';
-
-  var text = innerText(el, { tags: { div : '\n' } });
-
-  t.equal(text, 'helloworld');
-
-  t.end();
-});
-
-test('should replace <div> if second param is defined and div tag is included', function(t){
-
-  var el = document.querySelector('body');
-
-  el.innerHTML = 'hello<div style="width:23">world</div>';
-
-  var text = innerText(el, { tags: { div : '\n\n\n' }});
-
-  t.equal(text, 'hello\n\n\nworld');
-
-  t.end();
-});
-
-test('should replace <div> and <p> if second param is defined and both div and p taga are included', function(t){
-
-  var el = document.querySelector('body');
-
-  el.innerHTML = 'hello<div>world</div>hi<p style="width:23">there</p>';
-
-  var text = innerText(el,{ tags: { div : '\n', p : '\n' } });
-
-  t.equal(text, 'hello\nworldhi\nthere');
-
-  t.end();
-});
-
-test('should replace <p> with newline', function(t){
-
-  var el = document.querySelector('body');
-
-  el.innerHTML = 'hello<p>world</p>';
-
-  var text = innerText(el);
-
-  t.equal(text, 'hello\nworld');
-
-  t.end();
-});
-
-test('should replace <p> with newline when multiple p tags', function(t){
-
-  var el = document.querySelector('body');
-
-  el.innerHTML = 'hello<p>world</p><p>hi</p>';
-
-  var text = innerText(el);
-
-  t.equal(text, 'hello\nworld\nhi');
-
-  t.end();
-});
-
-test('should remove "&nbsp;" with space', function(t){
-
-  var el = document.querySelector('body');
-
-  el.innerHTML = 'hello&nbsp;world';
-
-  var text = innerText(el);
-
-  t.equal(text, 'hello world');
-
-  t.end();
-});
-
-
-test('should remove remaining html tags', function(t){
-
-  var el = document.querySelector('body');
-
-  el.innerHTML = 'hello<div>world</div><br><span class="important"><em>inner</em>Text</span>';
-
-  var text = innerText(el);
-
-  t.equal(text, 'helloworld\ninnerText');
-
-  t.end();
-});
-
-test('complex html', function(t){
-
-  var el = document.querySelector('body');
-
-  el.innerHTML = '<p style="width:23">Hello<span style="color: red" >w</span></p><div id="some_id" class="some_class">World</div>';
-
-  var text = innerText(el,{ tags: { div : '\n', p : '\n', br: '\n' }});
-
-  t.equal(text, '\nHellow\nWorld');
-
-  t.end();
-});
-
-test('complex html with entities that should be unescaped', function(t){
-
-  var el = document.querySelector('body');
-
-  el.innerHTML = '<p style="width:23">Hello<span style="color: red" >w</span></p><div id="some_id" class="some_class">!@#$%^&*()<>_+-={}|\:;"<>,./   `~</div>';
-
-  var text = innerText(el,{ tags: { div : '\n', p : '\n', br: '\n' }});
-
-  t.equal(text, '\nHellow\n!@#$%^&*()<>_+-={}|\:;"<>,./   `~');
-
-  t.end();
+const test = require('tape');
+const innerText = require('./index');
+
+[
+  {
+    title: 'should return an empty string for empty input',
+    source: '',
+    result: '',
+  },
+  {
+    title: 'should replace <br/> tag with newline',
+    source: 'hello<br/>world',
+    result: 'hello\nworld',
+  },
+  {
+    title: 'should replace <br/> tag with given replace empty string',
+    source: 'hello<br/>world',
+    options: { tags: { br : '' } },
+    result: 'helloworld',
+  },
+  {
+    title: 'should replace <br/> tag with given replace new lines',
+    source: 'hello<br/>world',
+    options: { tags: { br : '\n\n' } },
+    result: 'hello\n\nworld',
+  },
+  {
+    title: 'should not replace <div> if div tag is not specified',
+    source: 'hello<div>world</div>',
+    result: 'helloworld',
+  },
+  {
+    title: 'should not replace <p> if second param is defined but p tag is excluded',
+    source: 'hello<p style="width:23">world</p>',
+    options: { tags: { div : '\n' } },
+    result: 'helloworld',
+  },
+  {
+    title: 'should replace <div> if second param is defined and div tag is included',
+    source: 'hello<div style="width:23">world</div>',
+    options: { tags: { div : '\n\n\n' }},
+    result: 'hello\n\n\nworld',
+  },
+  {
+    title: 'should replace <div> and <p> if second param is defined and both div and p taga are included',
+    source: 'hello<div>world</div>hi<p style="width:23">there</p>',
+    options: { tags: { div : '\n', p : '\n' } },
+    result: 'hello\nworldhi\nthere',
+  },
+  {
+    title: 'should replace <p> with newline',
+    source: 'hello<p>world</p>',
+    result: 'hello\nworld',
+  },
+  {
+    title: 'should replace <p> with newline when multiple p tags',
+    source: 'hello<p>world</p><p>hi</p>',
+    result: 'hello\nworld\nhi',
+  },
+  {
+    title: 'should remove "&nbsp;" with space',
+    source: 'hello&nbsp;world',
+    result: 'hello world',
+  },
+
+  {
+    title: 'should remove remaining html tags',
+    source: 'hello<div>world</div><br><span class="important"><em>inner</em>Text</span>',
+    result: 'helloworld\ninnerText',
+  },
+  {
+    title: 'complex html',
+    source: '<p style="width:23">Hello<span style="color: red" >w</span></p><div id="some_id" class="some_class">World</div>',
+    options: { tags: { div : '\n', p : '\n', br: '\n' }},
+    result: '\nHellow\nWorld',
+  },
+  {
+    title: 'complex html with entities that should be unescaped',
+    source: '<p style="width:23">Hello<span style="color: red" >w</span></p><div id="some_id" class="some_class">!@#$%^&*()<>_+-={}|\:;"<>,./   `~</div>',
+    options: { tags: { div : '\n', p : '\n', br: '\n' }},
+    result: '\nHellow\n!@#$%^&*()<>_+-={}|\:;"<>,./   `~',
+  },
+].forEach( data => {
+  test( data.title, t => {
+    const args = data.options ? [ data.options ] : [];
+    const body = document.querySelector('body');
+    body.innerHTML = data.source;
+    t.equal(innerText(data.source, ...args), data.result);
+    t.equal(innerText(body, ...args), data.result);
+    t.end();
+  });
 });
